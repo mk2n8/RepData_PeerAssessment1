@@ -23,13 +23,9 @@ activity$date <- ymd(activity$date)
 
 # Step 2: What is the mean total number of steps taken per day? 
 ```{r, echo=TRUE}
-##  Processing the data with dplyr
-steps_per_day <- group_by(activity, date)
-##  Creating tidy data to explore the number of steps per day
-hist_data <- summarize(steps_per_day, sum(steps))
+##  Creating tidy data to explor the number of steps per day    
+hist_data <- ddply(activity, .(date), summarise, total_steps = sum(steps))
 hist_data <- na.omit(hist_data)
-names <- c("date", "total_steps")
-colnames(hist_data) <- names
 ##  Calculating the mean and the median
 mean(hist_data$total_steps)
 median(hist_data$total_steps)
@@ -48,15 +44,10 @@ The average number of steps taken every day is 10,766. The distribution is fairl
 
 # Step 3: What is the average daily activity pattern?
 ```{r, echo=TRUE}
-##  Processing the data with dplyr and removing NAs
-steps_per_interval <- group_by(activity, interval)
-steps_per_interval <- na.omit(steps_per_interval)
 ##  Creating tidy data to explore the average daily activity patterns
-series_data <- summarize(steps_per_interval, mean(steps))
-names <- c("interval", "average_steps")
-colnames(series_data) <- names
+series_data <- ddply(activity, .(interval), summarise, average_steps = mean(steps, na.rm = T))
 ##  Calculating the value of the summary statistics
-max_int <- series_data[which.max(series_data$average_steps),]
+series_data[which.max(series_data$average_steps),]
 range(series_data$interval)
 ##  Plotting the data and including the summary statistics
 plot(series_data$average_steps, type = "l",
@@ -78,10 +69,7 @@ activity_new <- activity
 activity_new <- replace(activity_new, is.na(activity_new), mean(series_data$average_steps))
 sum(is.na(activity_new))
 ##  Creating tidy data to explore the number of steps per day
-steps_per_day <- group_by(activity_new, date)
-hist_data <- summarize(steps_per_day, sum(steps))
-names <- c("date", "total_steps")
-colnames(hist_data) <- names
+hist_data <- ddply(activity_new, .(date), summarise, total_steps = sum(steps))
 ##  Calculating the mean and the median
 mean(hist_data$total_steps)
 median(hist_data$total_steps)
@@ -93,7 +81,7 @@ hist(hist_data$total_steps, breaks = 24, col = "orange",
      xlab = "Number of Steps",
      ylab = "Counts"
      )
-abline(v=mean(hist_data$total_steps), col = "yellow")
+abline(v=mean(hist_data$total_steps), col = "red")
 legend("topright", c("Mean = 10766.19", "Median = 10766.19"))
 ```
 By replacing the NAs with the average number of steps per activity interval, the overall mean remains the same as with the NAs removed. The median shifts slightly and is now exactly equal to the mean.
