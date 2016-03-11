@@ -5,7 +5,7 @@ output:
     keep_md: true
 ---
 
-This is an R Markdown document for the first project from the Reproducible Research course. The data analyzed here come from activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. The data are collected at 5 minute intervals through out the day. The dataset consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
+This is an R Markdown document for the first project from the Reproducible Research course. The data analyzed here come from activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. The data are collected at 5 minute intervals through out the day. The dataset consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day. All plots are located in the Plots folder.
 
 # Step 0: Start by downloading the data to your working directory.
 
@@ -40,7 +40,7 @@ hist(hist_data$total_steps, breaks = 24, col = "blue",
 abline(v=mean(hist_data$total_steps), col = "yellow")
 legend("topright", c("Mean = 10766.19", "Median = 10765"))
 ```
-The average number of steps taken every day is 10,766. The distribution is fairly normal with the median number of steps at close to the mean at 10,765. NAs are ignored because they do not influence the totals.
+The average number of steps taken every day is 10,766. The distribution is fairly normal (see Plot1) with the median number of steps at close to the mean at 10,765. NAs are ignored because they do not influence the totals.
 
 # Step 3: What is the average daily activity pattern?
 ```{r, echo=TRUE}
@@ -58,7 +58,7 @@ plot(series_data$average_steps, type = "l",
      )
 legend("topright", "Max Activity Interval = 8:35")
 ```
-Since the intervals cover 24 hours (range = 0-2355), the peak of the average daily activity is around 8:35 AM (interval 835).
+The activity peak is at interval 835. Since the intervals cover 24 hours (range = 0-2355), the peak of the average daily activity is around 8:35 AM (see Plot2).
 
 # Step 4: Imputing the missing values.
 ```{r, echo=TRUE}
@@ -84,7 +84,7 @@ hist(hist_data$total_steps, breaks = 24, col = "orange",
 abline(v=mean(hist_data$total_steps), col = "red")
 legend("topright", c("Mean = 10766.19", "Median = 10766.19"))
 ```
-By replacing the NAs with the average number of steps per activity interval, the overall mean remains the same as with the NAs removed. The median shifts slightly and is now exactly equal to the mean.
+By replacing the NAs with the average number of steps per activity interval, the overall mean remains the same as with the NAs removed (see Plot3). The median shifts slightly and is now exactly equal to the mean.
 
 # Step 5: Are there differences in activity patterns between weekdays and weekends?
 ```{r, echo=TRUE}
@@ -100,4 +100,4 @@ g + geom_line() + facet_grid(day ~ .) +
         labs(x="Interval") +
         labs(title="Average Daily Activity Pattern")
 ```
-The patterns are clearly different. During a typical workday, the activity is more concentrated in the morning hours when people go to work. During a typical weekend day, the activity is spread out throughout the day. Because weekday the data dominate the combined data (5 weekdays vs 2 weekend days), the overall pattern closely resembles that of a weekday.
+The patterns are clearly different (see Plot4). During a typical workday, the activity is more concentrated in the morning hours when people go to work. During a typical weekend day, the activity is spread out throughout the day. Because weekday the data dominate the combined data (5 weekdays vs 2 weekend days), the overall pattern closely resembles that of a weekday.
