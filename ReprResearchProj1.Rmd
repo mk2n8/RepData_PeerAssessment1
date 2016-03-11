@@ -1,20 +1,13 @@
 ---
 title: "Reproducible Research Project 1"
+output: 
+  html_document:
+    keep_md: true
 ---
 
 This is an R Markdown document for the first project from the Reproducible Research course. The data analyzed here come from activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. The data are collected at 5 minute intervals through out the day. The dataset consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
 # Step 0: Start by downloading the data to your working directory.
-```{r, echo=TRUE}
-if (!file.exists("Activity")) {
-  dir.create ("Activity")
-}
-myURL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
-download.file(myURL, destfile = "./activity.zip", mode = wb)
-setwd("./Activity")
-unzip("activity.zip")
-file.remove("activity.zip")
-```
 
 # Step 1: Loading and preprocessing the data.
 ```{r, echo=TRUE}
